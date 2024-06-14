@@ -115,3 +115,75 @@ function createEmployee({id}: {id:number}): {
 function createStudent(student:{id:number,name:string}):void {
     console.log(`Welcome to the course ${student.name}`)
 }
+
+function processData(input: string | number, config: {reverse:boolean} = {reverse: false}): string | number {
+    if(typeof input === 'number'){
+        return input * input
+    } else {
+        return config.reverse ? input.toUpperCase().split('').reverse().join('') : input.toUpperCase()
+    }
+}
+
+console.log(processData(10))
+console.log(processData('Hello'))
+console.log(processData('Hello', {reverse:true}))
+
+
+// type alias
+
+type User = {
+    id: number; name: string; isActive: boolean
+}
+
+const john: User = {
+    id: 1,
+    name: 'test',
+    isActive: true
+}
+
+function createUser(user: User): User {
+    console.log(`Hello there ${user.name.toUpperCase()} !!!`);
+    return user;
+  }
+
+  type Theme = 'red' | 'black'
+
+  let color: Theme = 'black'
+
+  function colors(t: Theme): string {
+    return `${t} is a string`
+  }
+
+  colors('red')
+
+  // challenge
+
+  type Employee = {
+    id:number,
+    name: string,
+    department: string
+  }
+
+  type Manager = {
+    id:number,
+    name: string,
+    employees: Employee[]
+  }
+
+  type Staff = Employee | Manager
+
+function printStaffDetails(staff: Staff): void{
+    if('employees' in staff){
+        console.log(`${staff.name} is a manager of ${staff.employees.length} employees.`)
+    } else {
+        console.log(`${staff.name} is an employee in the ${staff.department} department.`)
+    }
+}
+
+
+const alice: Employee = { id: 1, name: 'Alice', department: 'Sales' };
+const steve: Employee = { id: 1, name: 'Steve', department: 'HR' };
+const bob: Manager = { id: 2, name: 'Bob', employees: [alice, steve] };
+
+console.log(printStaffDetails(alice))
+console.log(printStaffDetails(bob))
