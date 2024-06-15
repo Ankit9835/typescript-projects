@@ -129,6 +129,7 @@ console.log(processData('Hello'))
 console.log(processData('Hello', {reverse:true}))
 
 
+
 // type alias
 
 type User = {
@@ -187,3 +188,70 @@ const bob: Manager = { id: 2, name: 'Bob', employees: [alice, steve] };
 
 console.log(printStaffDetails(alice))
 console.log(printStaffDetails(bob))
+
+
+// intersection type
+
+type Book = {
+    id:number,
+    name:string,
+    price:number
+}
+
+const discountedBook:Book & {discount:number} = {
+    id:1,
+    name:'bob',
+    price:23,
+    discount:0.2
+}
+
+
+// computed properties
+
+const propName = 'test'
+
+type Animal = {
+    [propName]:string
+}
+
+const animal: Animal = {
+    [propName]: 'tiger'
+} 
+
+
+// interface
+
+interface Profile {
+    id:number,
+    name:string,
+    imageUrl:string
+    isActive?:boolean
+    printAuthor():void,
+    printTitle(message:string):string
+    printSomething:(message:string)=>string
+}
+
+const profile:Profile = {
+    id:1,
+    name:'Ankit',
+    imageUrl:'pixels.com',
+    printAuthor(){
+        console.log('print author')
+    },
+    printTitle(message){
+        return `${this.name} ${message}`
+    },
+    // first choice
+    // printSomething:function(message){
+    //     return `${this.name} ${message}`
+    // }
+    // second choice
+    printSomething:(message)=>{
+        return `${message}`
+    }
+}
+
+console.log(profile.printTitle('is a good boy'))
+
+// interface method
+
