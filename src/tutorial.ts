@@ -159,11 +159,11 @@ function createUser(user: User): User {
 
   // challenge
 
-  type Employee = {
-    id:number,
-    name: string,
-    department: string
-  }
+//   type Employee = {
+//     id:number,
+//     name: string,
+//     department: string
+//   }
 
   type Manager = {
     id:number,
@@ -253,5 +253,69 @@ const profile:Profile = {
 
 console.log(profile.printTitle('is a good boy'))
 
-// interface method
+
+interface Computer {
+    readonly id:number;
+    brand:string;
+    ram:number;
+    updgradeRam(amount:number):number;
+    storage?:number
+}
+
+
+const laptop: Computer = {
+    id:1,
+    brand: 'hp',
+    ram: 8,
+    updgradeRam(amount:number){
+        this.ram += amount
+        return this.ram
+    }
+}
+
+laptop.storage = 250
+
+console.log('laptop',laptop)
+console.log(laptop.updgradeRam(25))
+
+// interface merging,extend and typeguard
+
+interface Person {
+    name: string,
+    getDetails():string
+}
+
+interface DogOwner {
+    dogName: string,
+    getDogDetails():string
+}
+
+interface Person {
+    age:number
+}
+
+const person:Person = {
+    name:'ankit',
+    getDetails(){
+        return `${this.name}`
+    },
+    age:30
+}
+
+interface Employee extends Person {
+    employeeId:string
+}
+
+const employee: Employee = {
+    name: 'ankit',
+    getDetails(){
+        return `${this.name}`
+    },
+    age:28,
+    employeeId: 'fde23423'
+}
+
+interface Managers extends Person, Employee {
+    managePeople():void
+}
 
