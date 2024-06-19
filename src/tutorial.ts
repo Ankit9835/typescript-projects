@@ -319,3 +319,59 @@ interface Managers extends Person, Employee {
     managePeople():void
 }
 
+// tuple
+
+let persons: readonly [string,number] = ['test', 1];
+let userName: [string,number?] = ['john',2]
+userName[0] = 'test'
+userName.push('some random value')
+console.log('userName', userName)
+
+function getPerson(): [string,number]{
+    return ['john', 35]
+}
+
+let randomPerson = getPerson()
+console.log(randomPerson[0])
+console.log(randomPerson[1])
+
+enum ServerResponseStatus {
+    Success = 200,
+    Error = 'Error',
+}
+
+interface ServerResponse {
+    result: ServerResponseStatus,
+    data: string[]
+}
+
+function getServerResponse(): ServerResponse{
+    return {
+        result: ServerResponseStatus.Error,
+        data: ['test', 'ring']
+    }
+}
+
+let testServer: ServerResponse = getServerResponse()
+console.log('test server',testServer)
+
+enum UserRole {
+    Admin = 'Admin',
+    Manager = 'Manager',
+    Employee = 'Employee'
+}
+
+type NewUser = {
+    id: number,
+    name: string,
+    role: UserRole,
+    contact: [string,string]
+}
+
+function createUsers(user: NewUser): NewUser{
+    return user
+}
+
+console.log(createUsers({id:1,name:'ankit',role:UserRole.Admin,contact:['IN', '0612']}))
+
+// type assertion
