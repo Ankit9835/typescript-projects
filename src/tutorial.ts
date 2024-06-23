@@ -375,3 +375,83 @@ function createUsers(user: NewUser): NewUser{
 console.log(createUsers({id:1,name:'ankit',role:UserRole.Admin,contact:['IN', '0612']}))
 
 // type assertion
+
+let someValue:any = 'this is a string'
+
+let stringLength:number = (someValue as String).length
+
+type Bird = {
+    name:string
+}
+
+type Animals = {
+    breed:string
+}
+
+let birdString = '{"name":"sparrow"}'
+let animalString = '{"breed":"lion"}'
+
+// Parse the JSON string into an object
+let birdObject = JSON.parse(birdString);
+let animalObject = JSON.parse(animalString);
+
+let bird = birdObject as Bird
+let animals = animalObject as Animals
+
+console.log('bird', bird.name)
+console.log('animal', animals.breed)
+
+// unknown
+
+let unknownValue:unknown
+
+unknownValue = 'test'
+unknownValue = ['test', 1, true]
+unknownValue = 42.234423
+
+if(typeof unknownValue === 'number'){
+    console.log(unknownValue.toFixed())
+}
+
+// never
+
+type DifferentColor = 'light' | 'dark'
+
+function checkDifferentColor(color: DifferentColor){
+    if(color === 'light'){
+        console.log('light theme')
+        return
+    } if(color === 'dark'){
+        console.log('dark theme')
+        return
+    }
+    color // never type is use here
+}
+
+enum Color {
+    Red,
+    Blue
+}
+
+function getColorName(color: Color){
+    switch(color){
+        case Color.Red:
+            return 'Red'
+        case Color.Blue:
+            return 'Blue'
+        default:
+            let unexpectedColor:never = color
+            throw new Error(`Unexpected color value: ${unexpectedColor}`);
+    }
+}
+
+console.log(getColorName(Color.Red))
+console.log(getColorName(Color.Blue))
+
+// modules 
+
+let name = 'shakeAdnBake';
+
+const susan = 'susan';
+
+export let something = 'something';
