@@ -455,3 +455,21 @@ let name = 'shakeAdnBake';
 const susan = 'susan';
 
 export let something = 'something';
+
+export function sayHello(name:string):void{
+    console.log(`Hello ${name}`)
+}
+
+export let pers= 'mike'
+
+export type Student = {
+    name:string,
+    age:number
+}
+
+const newStudent: Student = {
+    name:'Ankit',
+    age:25
+}
+
+export default newStudent
