@@ -473,3 +473,36 @@ const newStudent: Student = {
 }
 
 export default newStudent
+
+// generics
+
+function genericsFunction<T>(args:T):T{
+    return args
+}
+
+const someStringValue = genericsFunction<string>('test')
+const numberValue = genericsFunction<number>(3)
+
+interface Genetics<T>{
+    value: T,
+    getValue: () => T
+}
+
+const genericSting: Genetics<string> = {
+    value: 'hello world',
+    getValue(){
+        return 'test'
+    }
+}
+
+async function someFunc(): Promise<number>{
+    return 1234
+}
+
+function createArray<T>(length:number, values:T): Array<T>{
+    let result: T[] = []
+    result = Array(length).fill(value)
+    return result
+}
+
+let arrayString = createArray<string>(10, 'test')
