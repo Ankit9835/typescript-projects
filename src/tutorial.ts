@@ -506,3 +506,87 @@ function createArray<T>(length:number, values:T): Array<T>{
 }
 
 let arrayString = createArray<string>(10, 'test')
+
+function pair<T,U>(param1:T,params2:U): [T,U]{
+    return [param1, params2]
+}
+
+const newPair = pair<number,string>(2,'test')
+
+function processValue<T extends string | number>(value: T):T{
+    console.log(value)
+    return value
+}
+
+processValue('hello')
+processValue(25)
+
+
+type Car = {
+    brand: string;
+    model: string;
+  };
+  
+  const cars: Car = {
+    brand: 'ford',
+    model: 'mustang',
+  };
+  
+  type Product = {
+    name: string;
+    price: number;
+  };
+  
+  const product: Product = {
+    name: 'shoes',
+    price: 1.99,
+  };
+  
+  type Students = {
+    name: string;
+    age: number;
+  };
+  
+  const student: Student = {
+    name: 'peter',
+    age: 20,
+  };
+
+function printName<T extends {name: string}>(value: T):void{
+    console.log(value.name)
+    //return value
+}
+
+const newName = printName(product)
+
+const url = 'https://www.course-api.com/react-tours-project';
+
+type Tour = {
+    id: string;
+    name: string;
+    info: string;
+    image: string;
+    price: string;
+    // Add more fields as necessary.
+  };
+
+async function fetchData(url: string):Promise<Tour[]>{
+    try {
+        const response = await fetch(url)
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const data: Tour[] = await response.json();
+        return data;
+    } catch (error) {
+        const errMsg = error instanceof Error ? error.message : 'there was an error'
+        console.log(errMsg)
+        return []
+    }
+}
+
+const tours = await fetchData(url)
+tours.map((tour) => {
+    console.log(tour.name)
+})
+
