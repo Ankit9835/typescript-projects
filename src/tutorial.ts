@@ -557,36 +557,158 @@ function printName<T extends {name: string}>(value: T):void{
     //return value
 }
 
-const newName = printName(product)
+// const newName = printName(product)
 
+// const url = 'https://www.course-api.com/react-tours-project';
+
+// type Tour = {
+//     id: string;
+//     name: string;
+//     info: string;
+//     image: string;
+//     price: string;
+//     // Add more fields as necessary.
+//   };
+
+// async function fetchData(url: string):Promise<Tour[]>{
+//     try {
+//         const response = await fetch(url)
+//         if(!response.ok){
+//             throw new Error(`HTTP error! status: ${response.status}`)
+//         }
+//         const data: Tour[] = await response.json();
+//         return data;
+//     } catch (error) {
+//         const errMsg = error instanceof Error ? error.message : 'there was an error'
+//         console.log(errMsg)
+//         return []
+//     }
+// }
+
+// const tours = await fetchData(url)
+// tours.map((tour) => {
+//     console.log(tour.name)
+// })
+
+// zod library
+
+import { z } from 'zod';
 const url = 'https://www.course-api.com/react-tours-project';
 
-type Tour = {
-    id: string;
-    name: string;
-    info: string;
-    image: string;
-    price: string;
-    // Add more fields as necessary.
-  };
+const tourSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    info: z.string(),
+    image: z.string(),
+    price: z.string(),
+    somethign: z.string(),
+  });
 
-async function fetchData(url: string):Promise<Tour[]>{
+  type Tour = z.infer<typeof tourSchema>
+
+  async function fetchData(url:string): Promise<Tour[]>{
     try {
-        const response = await fetch(url)
-        if(!response.ok){
-            throw new Error(`HTTP error! status: ${response.status}`)
-        }
-        const data: Tour[] = await response.json();
-        return data;
-    } catch (error) {
-        const errMsg = error instanceof Error ? error.message : 'there was an error'
-        console.log(errMsg)
-        return []
-    }
-}
+        const response = await fetch(url);
 
-const tours = await fetchData(url)
+    // Check if the request was successful.
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const rawData:Tour[] = await response.json()
+    const result = tourSchema.array().safeParse(rawData)
+    if (!result.success) {
+        throw new Error(`Invalid data: ${result.error}`);
+      }
+      return result.data;
+    } catch (error) {
+        const errMsg =
+      error instanceof Error ? error.message : 'there was an error...';
+    console.log(errMsg);
+
+    // throw error;
+    return [];
+    }
+  }
+
+const tours = await fetchData(url);
 tours.map((tour) => {
-    console.log(tour.name)
-})
+  console.log(tour.name);
+});
+
+// classes
+
+// class Book {
+//     public readonly title: string;
+//     public author: string;
+//     private checkedOut: boolean = false;
+//     constructor(title: string, author: string) {
+//       this.title = title;
+//       this.author = author;
+//     }
+//     public checkOut() {
+//       this.checkedOut = this.toggleCheckedOutStatus();
+//     }
+//     public isCheckedOut() {
+//       return this.checkedOut;
+//     }
+//     private toggleCheckedOutStatus() {
+//       return !this.checkedOut;
+//     }
+//   }
+  
+//   const deepWork = new Book('Deep Work', 'Cal Newport');
+//   deepWork.checkOut();
+//   console.log(deepWork.isCheckedOut()); // true
+  // deepWork.toggleCheckedOutStatus(); // Error: Property 'toggleCheckedOutStatus' is private and only accessible within class 'Book'.
+
+//   class Books {
+//     private checkedOut: boolean = false;
+//     constructor(public readonly title: string, public author: string) {}
+//   }
+
+//   class Book {
+//     private checkedOut: boolean = false;
+//     constructor(public readonly title: string, public author: string) {}
+//     get info() {
+//       return `${this.title} by ${this.author}`;
+//     }
+  
+//     private set checkOut(checkedOut: boolean) {
+//       this.checkedOut = checkedOut;
+//     }
+//     get checkOut() {
+//       return this.checkedOut;
+//     }
+//     public get someInfo() {
+//       this.checkOut = true;
+//       return `${this.title} by ${this.author}`;
+//     }
+//   }
+  
+//   const deepWork = new Book('deep work', 'cal newport');
+//   console.log(deepWork.info);
+//   // deepWork.checkOut = true;
+//   console.log(deepWork.someInfo);
+//   console.log(deepWork.checkOut);
+
+
+// interface IPerson {
+//     name: string;
+//     age: number;
+//     greet(): void;
+//   }
+  
+//   class Person implements IPerson {
+//     constructor(public name: string, public age: number) {}
+  
+//     greet() {
+//       console.log(
+//         `Hello, my name is ${this.name} and I'm ${this.age} years old.`
+//       );
+//     }
+//   }
+  
+//   const hipster = new Person('shakeAndBake', 100);
+//   hipster.greet();
 
