@@ -42,8 +42,7 @@ function createTask(task:Task): void {
 function renderTask(task:Task): void {
     const taskElement = document.createElement('li')
     taskElement.textContent = task.description
-    ulList?.appendChild(taskElement)
-    
+    ulList?.appendChild(taskElement)   
 }
 
 function updatedStorage():void{
